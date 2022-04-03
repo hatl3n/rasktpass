@@ -1,0 +1,15 @@
+{
+  "name": "rasktpass",
+  "version": "1.0.0",
+  "description": "Finner passkontor med tidligst ledig time over hele landet",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alexander Hatlen",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "express": "^4.17.3"
+  }
+}

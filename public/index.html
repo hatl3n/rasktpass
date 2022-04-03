@@ -1,0 +1,116 @@
+<!-- Thanks to lukehaas@github for this boilerplate -->
+<!-- Thanks to LeafletJS for a fantastic map framework -->
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>RasktPass.no</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta property="og:title" content="RasktPass.no">
+		<meta property="og:type" content="text/html">
+		<meta property="og:description" content="Finn ut hvor du raskest kan skaffe deg norsk pass">
+		<meta property="og:image" content="">
+		<meta property="og:url" content="https://rasktpass.no">
+		<!--<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/icon.png" />-->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+		   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+		   crossorigin=""/>
+		<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+		   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+		   crossorigin=""></script>
+		<style>
+			html,body { padding:0; margin:0; height: 100%; }
+			#map { width: 100%; height: 100%; }
+		</style>
+	</head>
+	<body>
+		<div id="map">
+		</div>
+
+		<script>
+		var map = L.map('map').setView([65.3, 14], 5);
+		var passmarkers = L.featureGroup().addTo(map);
+
+		// Custom leaflet Controller
+		var passController = L.Control.extend({
+			options: { position: 'topleft' },
+			onAdd: function (map) {
+				var container = L.DomUtil.create('div', 'leaflet-passController');
+				container.id = "passController-div";
+				container.style.background = "#FFFFFF";
+				container.style.padding = "4px";
+				container.innerHTML = "<p id=\"loadingtxt\">Loading...</p>";
+
+				return container;
+			}
+		});
+		map.addControl(new passController());
+
+		// Statkart tiles
+		L.tileLayer('https://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=norges_grunnkart&zoom={z}&x={x}&y={y}',
+            	{
+                	attribution: '<a href="https://kartverket.no/">Kartverket</a>',
+	                maxZoom: 20
+		}).addTo(map);
+
+		function createPassMarkers(passkontorer) {
+			for (passkontor of passkontorer) {
+		                let marker = L.marker([passkontor.coords.lat, passkontor.coords.long], {passProps : {...passkontor}})
+	        	                .bindPopup(passkontor.firstDate + " @ " +passkontor.name);
+				passmarkers.addLayer(marker);
+			}
+		}
+
+		function activateFilter(e) {
+			// Filters active markers based on event or integer with days to look-ahead for
+			let daysToAdd;
+			if (e.target) {
+				if (isNaN(+e.target.value)) return console.log("NOT A NUMBER: " + e.target.value);
+				daysToAdd = +e.target.value;
+			}
+			else if (typeof e === "number") {
+				daysToAdd = e;
+				document.querySelector("#daysfilter").value = e;
+			}
+			else { return console.log("Problem with param fed to function",e); }
+
+			let validDates = passmarkers.getLayers().map( x => [x, new Date(x.options.passProps.firstDate)]);
+			let maxDate = new Date();
+			maxDate.setDate(maxDate.getDate() + daysToAdd);
+			validPassmarkers = validDates.filter( marker => marker[1] <= maxDate );
+			passmarkers.getLayers().forEach( marker => {
+				if (validPassmarkers.map(x=>x[0]).includes(marker)) {
+					marker.addTo(map)
+				} else {
+					marker.removeFrom(map)
+				}
+			});
+		}
+
+		( async () => {
+			let response = await fetch("/getObj");
+			let passkontorer = await response.json();
+			document.querySelector("#loadingtxt").style.visibility = "hidden";
+                        document.querySelector("#passController-div").innerHTML = `
+				<p>Første ledig time innen <input id="daysfilter" type="text" style="width: 3ch;"> dager<br/>
+                                <button onclick="activateFilter(7)">1 uke</button><br>
+				<button onclick="activateFilter(14)">2 uker</button><br>
+                                <button onclick="activateFilter(31)">1 måned</button><br>
+				<button onclick="activateFilter(62)">2 måneder</button><br>
+                                <button onclick="activateFilter(93)">3 måneder</button><br>
+                                <button onclick="activateFilter(123)">3 måneder</button><br>
+                                <button onclick="activateFilter(365)">1 år</button><br>
+				<p>
+			`;
+			document.querySelector("#daysfilter").addEventListener('input', activateFilter);
+			document.querySelector("#daysfilter").focus();
+
+			createPassMarkers(passkontorer);
+		})();
+
+		</script>
+	</body>
+</html>
