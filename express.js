@@ -1,7 +1,7 @@
 const express = require('express');
 const rasktpass = require('./index.js');
 const app = express();
-const port = 8080;
+const port = 80;
 
 app.get('/getObj', async (req, res) => {
   let rp = await rasktpass();
