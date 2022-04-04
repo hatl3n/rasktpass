@@ -31,11 +31,10 @@ function getAvailableDates({ linkAvailableDates }) {
 }
 
 const promises = passkontor.map(kontor => getAvailableDates(kontor));
-console.log("Please wait for promises to resolve...!");
 
 // Going synchronized async
 rVals = await Promise.all(promises);
-console.log(rVals);
+//console.log(rVals); // For debugging
 rVals.forEach( (v, i) => { passkontor[i].firstDate = v; } );
 
 passkontorWithDates = passkontor.filter( x => x.firstDate );
@@ -51,7 +50,6 @@ passkontorSorted = passkontorWithDates.sort( (a,b) => {
 
 return passkontorSorted;
 
-//console.log(passkontorSorted);
 passkontorSorted.forEach( x => { console.log(`${x.firstDate}: ${x.name}`); } )
 
 // End sync async
