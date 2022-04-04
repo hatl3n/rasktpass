@@ -20,7 +20,7 @@ app.get('/getObj', async (req, res) => {
     toRespond = cachedJson[1];
     console.log("Served from cache");
   }
-  res.send(JSON.stringify(rp));
+  res.send(JSON.stringify(toRespond));
 })
 
 app.use(express.static('public'));
