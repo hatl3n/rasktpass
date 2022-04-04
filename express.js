@@ -11,16 +11,21 @@ app.get('/getObj', async (req, res) => {
   let toRespond;
   if ((cachedJson[0] + _10MIN) < now())
   {
-    let rp = await rasktpass();
-    cachedJson = [now(), rp];
-    toRespond = rp;
-    console.log("Stored new cache");
+    try {
+      let rp = await rasktpass();
+      cachedJson = [now(), rp];
+      toRespond = rp;
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send();
+    }
+    //console.log("Stored new cache");
   }
   else {
     toRespond = cachedJson[1];
-    console.log("Served from cache");
+    //console.log("Served from cache");
   }
-  res.send(JSON.stringify(toRespond));
+  return res.send(JSON.stringify(toRespond));
 })
 
 app.use(express.static('public'));
