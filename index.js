@@ -10,9 +10,6 @@ const urlEndpointTimebestilling = "https://pass-og-id.politiet.no/timebestilling
 const passkontor = data.orgUnits
         .filter( x =>
 		x.linkAppointment.indexOf(urlEndpointTimebestilling) !== -1
-		&&
-		//1 > 0
-		Math.random() > 0.8
         )
 	.map(x => ({
 		name: x.name,
