@@ -2,83 +2,100 @@
 <!-- Thanks to LeafletJS for a fantastic map framework -->
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>RasktPass.no</title>
-		<meta name="description" content="">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta property="og:title" content="RasktPass.no">
-		<meta property="og:type" content="text/html">
-		<meta property="og:description" content="Finn ut hvor du raskest kan skaffe deg norsk pass">
-		<meta property="og:image" content="">
-		<meta property="og:url" content="https://rasktpass.no">
-		<!--<link rel="shortcut icon" href="/favicon.ico" />
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>RasktPass.no</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="RasktPass.no">
+	<meta property="og:type" content="text/html">
+	<meta property="og:description" content="Finn ut hvor du raskest kan skaffe deg norsk pass">
+	<meta property="og:image" content="">
+	<meta property="og:url" content="https://rasktpass.no">
+	<!--<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="apple-touch-icon" href="/icon.png" />-->
-		<!-- Google's Material Icons -->
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<!-- End Google's Material Icons -->
-		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-		   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-		   crossorigin=""/>
-		<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-		   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-		   crossorigin=""></script>
-		<style>
-			html,body { padding:0; margin:0; height: 100%; }
-			#passController-div { font-size: 1.5em; }
-			#passController-div > p > button {
-				padding: 5px;
-				margin: 2px;
-				background-color: #3258a8;
-				color: #ffffff;
-				text-decoration: none;
-				display: inline-block;
-				border-radius: 10px;
-			}
-			#map { width: 100%; height: 100%; }
-		        /* Styles for divIcon */
-		        .marker-pin {
-		            width: 30px;
-		            height: 30px;
-		            border-radius: 50% 50% 50% 0;
-		            background: #c30b82;
-		            position: absolute;
-		            transform: rotate(-45deg);
-		            left: 50%;
-		            top: 50%;
-		            margin: -15px 0 0 -15px;
-		        }
+	<!-- Google's Material Icons -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- End Google's Material Icons -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+		integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+		crossorigin="" />
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+		integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+		crossorigin=""></script>
+	<style>
+		html,
+		body {
+			padding: 0;
+			margin: 0;
+			height: 100%;
+		}
 
-		        /* to draw white circle */
-		        .marker-pin::after {
-		            content: '';
-		            width: 24px;
-		            height: 24px;
-		            margin: 3px 0 0 3px;
-		            background: #fff;
-		            position: absolute;
-		            border-radius: 50%;
-		        }
+		#passController-div {
+			font-size: 1.5em;
+		}
 
-		        /* to align icon */
-		        .custom-div-icon i {
-		            position: absolute;
-		            width: 22px;
-		            font-size: 22px;
-		            left: 0;
-		            right: 0;
-		            margin: 10px auto;
-		            text-align: center;
-		        }
-		</style>
-	</head>
-	<body>
-		<div id="map">
-		</div>
+		#passController-div>p>button {
+			padding: 5px;
+			margin: 2px;
+			background-color: #3258a8;
+			color: #ffffff;
+			text-decoration: none;
+			display: inline-block;
+			border-radius: 10px;
+		}
 
-		<script>
+		#map {
+			width: 100%;
+			height: 100%;
+		}
+
+		/* Styles for divIcon */
+		.marker-pin {
+			width: 30px;
+			height: 30px;
+			border-radius: 50% 50% 50% 0;
+			background: #c30b82;
+			position: absolute;
+			transform: rotate(-45deg);
+			left: 50%;
+			top: 50%;
+			margin: -15px 0 0 -15px;
+		}
+
+		/* to draw white circle */
+		.marker-pin::after {
+			content: '';
+			width: 24px;
+			height: 24px;
+			margin: 3px 0 0 3px;
+			background: #fff;
+			position: absolute;
+			border-radius: 50%;
+		}
+
+		/* to align icon */
+		.custom-div-icon i {
+			position: absolute;
+			width: 22px;
+			font-size: 22px;
+			left: 0;
+			right: 0;
+			margin: 10px auto;
+			text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="map">
+	</div>
+
+	<script>
 		var map = L.map('map').setView([65.3, 14], 5);
+		map.zoomControl.setPosition('bottomright');
 		var passmarkers = L.featureGroup().addTo(map);
 
 		// Custom leaflet Controller
@@ -90,6 +107,8 @@
 				//container.style.background = "#FFFFFF";
 				container.style.padding = "4px";
 				container.innerHTML = "<p id=\"loadingtxt\">Laster lynferske data. Vennligst vent...</p>";
+				// Disable click-thrugh
+				L.DomEvent.disableClickPropagation(container);
 
 				return container;
 			}
@@ -98,24 +117,24 @@
 
 		// Statkart tiles
 		L.tileLayer('https://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=norges_grunnkart&zoom={z}&x={x}&y={y}',
-            	{
-                	attribution: '<a href="https://kartverket.no/">Kartverket</a>',
-	                maxZoom: 20
-		}).addTo(map);
+			{
+				attribution: '<a href="https://kartverket.no/">Kartverket</a>',
+				maxZoom: 20
+			}).addTo(map);
 
 		var passIcon = new L.divIcon({
-	                className: 'custom-div-icon',
-	                html: `<div style='background-color:#3258a8' class='marker-pin'></div><i class='material-icons' style="color:#3258a8">contact_page</i>`,
-	                iconSize: [30, 42],
-	                iconAnchor: [15, 42], // Places icon with arrow on spot, instead of TopLeft on spot
-	                popupAnchor: [0, -32], // Top of icon
-	                tooltipAnchor: [15, -21] // Side of icon
+			className: 'custom-div-icon',
+			html: `<div style='background-color:#3258a8' class='marker-pin'></div><i class='material-icons' style="color:#3258a8">contact_page</i>`,
+			iconSize: [30, 42],
+			iconAnchor: [15, 42], // Places icon with arrow on spot, instead of TopLeft on spot
+			popupAnchor: [0, -32], // Top of icon
+			tooltipAnchor: [15, -21] // Side of icon
 		});
 
 		function createPassMarkers(passkontorer) {
 			for (passkontor of passkontorer) {
-		                let marker = L.marker([passkontor.coords.lat, passkontor.coords.long], {passProps : {...passkontor}, icon: passIcon})
-	        	                .bindPopup(`<a href="${passkontor.linkAppointment}" target="_blank" alt="${passkontor.name}">${passkontor.firstDate} @ ${passkontor.name}</a>`);
+				let marker = L.marker([passkontor.coords.lat, passkontor.coords.long], { passProps: { ...passkontor }, icon: passIcon })
+					.bindPopup(`<a href="${passkontor.linkAppointment}" target="_blank" alt="${passkontor.name}">${passkontor.firstDate} @ ${passkontor.name}</a>`);
 				passmarkers.addLayer(marker);
 			}
 		}
@@ -131,14 +150,14 @@
 				daysToAdd = e;
 				document.querySelector("#daysfilter").value = e;
 			}
-			else { return console.log("Problem with param fed to function",e); }
+			else { return console.log("Problem with param fed to function", e); }
 
-			let validDates = passmarkers.getLayers().map( x => [x, new Date(x.options.passProps.firstDate)]);
+			let validDates = passmarkers.getLayers().map(x => [x, new Date(x.options.passProps.firstDate)]);
 			let maxDate = new Date();
 			maxDate.setDate(maxDate.getDate() + daysToAdd);
-			validPassmarkers = validDates.filter( marker => marker[1] <= maxDate );
-			passmarkers.getLayers().forEach( marker => {
-				if (validPassmarkers.map(x=>x[0]).includes(marker)) {
+			validPassmarkers = validDates.filter(marker => marker[1] <= maxDate);
+			passmarkers.getLayers().forEach(marker => {
+				if (validPassmarkers.map(x => x[0]).includes(marker)) {
 					marker.addTo(map)
 				} else {
 					marker.removeFrom(map)
@@ -146,11 +165,18 @@
 			});
 		}
 
-		( async () => {
-			let response = await fetch("/getObj");
-			let passkontorer = await response.json();
-			document.querySelector("#loadingtxt").style.visibility = "hidden";
-                        document.querySelector("#passController-div").innerHTML = `
+		(async () => {
+			(async () => {
+				try {
+					var response = await fetch("/getObj");
+					var passkontorer = await response.json();
+				} catch (error) {
+					document.querySelector("#loadingtxt").style.visibility = "hidden";
+					document.querySelector("#passController-div").innerHTML = `Feil på svaret fra passkontorene. Prøv igjen senere :(`;
+					return;
+				}
+				document.querySelector("#loadingtxt").style.visibility = "hidden";
+				document.querySelector("#passController-div").innerHTML = `
 				<p>Første ledig time innen<input id="daysfilter" type="text" style="width: 3ch;"> dager<br/>
                                 <button onclick="activateFilter(7)">1 uke</button><br>
 				<button onclick="activateFilter(14)">2 uker</button><br>
@@ -161,12 +187,13 @@
                                 <button onclick="activateFilter(365)">1 år</button><br>
 				<p>
 			`;
-			document.querySelector("#daysfilter").addEventListener('input', activateFilter);
-			document.querySelector("#daysfilter").focus();
+				document.querySelector("#daysfilter").addEventListener('input', activateFilter);
+				document.querySelector("#daysfilter").focus();
 
-			createPassMarkers(passkontorer);
-		})();
+				createPassMarkers(passkontorer);
+			})();
 
-		</script>
-	</body>
+	</script>
+</body>
+
 </html>
