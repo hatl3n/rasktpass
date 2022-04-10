@@ -8,15 +8,15 @@ const urlEndpointTimebestilling = "https://pass-og-id.politiet.no/timebestilling
 
 // Make a tidy array with just useful info
 const passkontor = data.orgUnits
-        .filter( x =>
+	.filter(x =>
 		x.linkAppointment.indexOf(urlEndpointTimebestilling) !== -1
-        )
+	)
 	.map(x => ({
 		name: x.name,
 		mapUrl: x.mapUrl,
 		get coords() {
 			let csvCoords = this.mapUrl.split("maps?q=")[1].split(",");
-			return {lat: csvCoords[0], long: csvCoords[1]};
+			return { lat: csvCoords[0], long: csvCoords[1] };
 		},
 		linkAppointment: x.linkAppointment,
 		branchId: x.linkAppointment.split("branch/")[1].split("?")[0],
@@ -26,33 +26,40 @@ const passkontor = data.orgUnits
 	}));
 
 async function getPasskontorWithDates() {
-function getAvailableDates({ linkAvailableDates }) {
-	return axios.get(linkAvailableDates).then( res => res.data[0]?.date );
-}
+	function getAvailableDates({ linkAvailableDates }) {
+		return axios.get(linkAvailableDates).then(res => res.data[0]?.date);
+	}
 
-const promises = passkontor.map(kontor => getAvailableDates(kontor));
+	const promises = passkontor.map(kontor => getAvailableDates(kontor));
 
-// Going synchronized async
-rVals = await Promise.all(promises);
-//console.log(rVals); // For debugging
-rVals.forEach( (v, i) => { passkontor[i].firstDate = v; } );
+	// Going synchronized async
+	rVals = await Promise.allSettled(promises);
+	//console.log(rVals); // For debugging
+	rVals.forEach((v, i) => {
+		if (v.status === "fulfilled") {
+			passkontor[i].firstDate = v.value;
+		} else {
+			passkontor[i].firstDate = undefined;
+			console.error(passkontor[i].name + " failed due to: " + v.reason);
+		}
+	});
 
-passkontorWithDates = passkontor.filter( x => x.firstDate );
+	passkontorWithDates = passkontor.filter(x => x.firstDate);
 
-passkontorSorted = passkontorWithDates.sort( (a,b) => {
-	const keyA = new Date(a.firstDate),
-	      keyB = new Date(b.firstDate);
-	// Compare
-	if (keyA < keyB) return -1;
-	if (keyA > keyB) return 1;
-	return 0;
-});
+	passkontorSorted = passkontorWithDates.sort((a, b) => {
+		const keyA = new Date(a.firstDate),
+			keyB = new Date(b.firstDate);
+		// Compare
+		if (keyA < keyB) return -1;
+		if (keyA > keyB) return 1;
+		return 0;
+	});
 
-return passkontorSorted;
+	return passkontorSorted;
 
-passkontorSorted.forEach( x => { console.log(`${x.firstDate}: ${x.name}`); } )
+	passkontorSorted.forEach(x => { console.log(`${x.firstDate}: ${x.name}`); })
 
-// End sync async
+	// End sync async
 }
 
 module.exports = getPasskontorWithDates;
