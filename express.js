@@ -7,6 +7,7 @@ const port = 80;
 var cachedJson = [0, ""]; // Format: unixtimems, jsonstring
 const _10MIN = 600000; // 10 min in ms
 
+app.set('trust proxy', true);
 app.use(morgan('combined'))
 
 app.get('/getObj', async (req, res) => {
