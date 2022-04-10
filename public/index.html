@@ -166,17 +166,16 @@
 		}
 
 		(async () => {
-			(async () => {
-				try {
-					var response = await fetch("/getObj");
-					var passkontorer = await response.json();
-				} catch (error) {
-					document.querySelector("#loadingtxt").style.visibility = "hidden";
-					document.querySelector("#passController-div").innerHTML = `Feil på svaret fra passkontorene. Prøv igjen senere :(`;
-					return;
-				}
+			try {
+				var response = await fetch("/getObj");
+				var passkontorer = await response.json();
+			} catch (error) {
 				document.querySelector("#loadingtxt").style.visibility = "hidden";
-				document.querySelector("#passController-div").innerHTML = `
+				document.querySelector("#passController-div").innerHTML = `Feil på svaret fra passkontorene. Prøv igjen senere :(`;
+				return;
+			}
+			document.querySelector("#loadingtxt").style.visibility = "hidden";
+			document.querySelector("#passController-div").innerHTML = `
 				<p>Første ledig time innen<input id="daysfilter" type="text" style="width: 3ch;"> dager<br/>
                                 <button onclick="activateFilter(7)">1 uke</button><br>
 				<button onclick="activateFilter(14)">2 uker</button><br>
@@ -187,11 +186,11 @@
                                 <button onclick="activateFilter(365)">1 år</button><br>
 				<p>
 			`;
-				document.querySelector("#daysfilter").addEventListener('input', activateFilter);
-				document.querySelector("#daysfilter").focus();
+			document.querySelector("#daysfilter").addEventListener('input', activateFilter);
+			document.querySelector("#daysfilter").focus();
 
-				createPassMarkers(passkontorer);
-			})();
+			createPassMarkers(passkontorer);
+		})();
 
 	</script>
 </body>
