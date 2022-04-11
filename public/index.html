@@ -26,26 +26,60 @@
 		integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
 		crossorigin=""></script>
 	<style>
+		:root {
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+			font-size: 120%;
+		}
+
 		html,
 		body {
 			padding: 0;
 			margin: 0;
 			height: 100%;
+			background-color: #f0f9ff;
+		}
+
+		.leaflet-container {
+			background-color: #f0f9ff;
+			font: inherit;
 		}
 
 		#passController-div {
-			font-size: 1.5em;
 			padding: 4px;
+			z-index: 800;
 		}
 
-		#passController-div>button {
-			padding: 5px;
+		#passController-div > button {
+			padding: 0.5rem 0.8rem;
 			margin: 2px;
-			background-color: #3258a8;
+			background-color: #0369a1;
+			border: none;
 			color: #ffffff;
 			text-decoration: none;
-			display: inline-block;
-			border-radius: 10px;
+			display: block;
+			border-radius: 3px;
+			width: 8rem;
+			text-align: left;
+			font-size: 0.9rem;
+			font-weight: normal;
+			pointer-events: auto;
+			margin: 0.2rem 0;
+		}
+
+		#passController-div > button:hover {
+			background-color: #0c4a6e;
+		}
+
+		.choose-days > input {
+			width: 3ch;
+			text-align: center;
+    		font-size: 1rem;
+    		display: inline;
+			border: none;
+    		border-bottom: 2px dashed #0369a1;
+    		color: #0369a1;
+			margin-left: 0.2rem;
+			margin-right: 0.2rem;
 		}
 
 		#map {
@@ -176,14 +210,13 @@
 			}
 			document.querySelector("#loadingtxt").style.visibility = "hidden";
 			document.querySelector("#passController-div").innerHTML = `
-				<p class="leaflet-control">Første ledig time innen<input id="daysfilter" type="text" style="width: 3ch;"> dager</p>
-				<button class="leaflet-control" onclick="activateFilter(7)">1 uke</button><br/>
-				<button class="leaflet-control" onclick="activateFilter(14)">2 uker</button><br/>
-				<button class="leaflet-control" onclick="activateFilter(31)">1 måned</button><br/>
-				<button class="leaflet-control" onclick="activateFilter(62)">2 måneder</button><br/>
-				<button class="leaflet-control" onclick="activateFilter(93)">3 måneder</button><br/>
-				<button class="leaflet-control" onclick="activateFilter(123)">3 måneder</button><br/>
-				<button class="leaflet-control" onclick="activateFilter(365)">1 år</button><br/>
+				<p class="choose-days">Første ledige time innen <input id="daysfilter" type="text"> dager</p>
+				<button onclick="activateFilter(7)">1 uke</button>
+				<button onclick="activateFilter(14)">2 uker</button>
+				<button onclick="activateFilter(31)">1 måned</button>
+				<button onclick="activateFilter(62)">2 måneder</button>
+				<button onclick="activateFilter(93)">3 måneder</button>
+				<button onclick="activateFilter(365)">1 år</button>
 			`;
 			document.querySelector("#daysfilter").addEventListener('input', activateFilter);
 			document.querySelector("#daysfilter").focus();
