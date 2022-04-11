@@ -125,6 +125,9 @@
 			margin: 10px auto;
 			text-align: center;
 		}
+		.textinfo {
+			font-size: 11px;
+		}
 	</style>
 </head>
 
@@ -150,7 +153,22 @@
 				return container;
 			}
 		});
+		// BottomLeft textinfo
+		var Textinfo = L.Control.extend({
+			options: { position: 'topleft' },
+			onAdd: function (map) {
+				var container = L.DomUtil.create('div');
+				container.id = "textinfo";
+				container.innerHTML = `Laget av Alexander Hatlen ( post[krøllalfa]hortenlyd.no )<br>
+							Vil du heller vente på ledig time i nærheten? Sjekk ut <a href="https://passvarsel.no" target="_blan">passvarsel.no</a>`;
+				// Disable click-thrugh
+				L.DomEvent.disableClickPropagation(container);
+
+				return container;
+			}
+		});
 		map.addControl(new passController());
+		map.addControl(new Textinfo();
 		document.querySelector("#passController-div").classList.remove("leaflet-control");
 
 		// Statkart tiles
