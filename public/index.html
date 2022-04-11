@@ -48,6 +48,10 @@
 			padding: 4px;
 			z-index: 800;
 		}
+		
+		#passController-div > p {
+			margin-left: 0;
+		}
 
 		#passController-div > button {
 			padding: 0.5rem 0.5rem;
@@ -68,10 +72,6 @@
 
 		#passController-div > button:hover {
 			background-color: #0c4a6e;
-		}
-		
-		.choose-days {
-			margin-left: 0px;
 		}
 
 		.choose-days > input {
@@ -155,7 +155,7 @@
 		});
 		// BottomLeft textinfo
 		var Textinfo = L.Control.extend({
-			options: { position: 'topleft' },
+			options: { position: 'bottomleft' },
 			onAdd: function (map) {
 				var container = L.DomUtil.create('div');
 				container.id = "textinfo";
