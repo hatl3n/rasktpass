@@ -146,7 +146,7 @@
 			onAdd: function (map) {
 				var container = L.DomUtil.create('div', 'leaflet-passController');
 				container.id = "passController-div";
-				container.innerHTML = "<p id=\"loadingtxt\">Laster lynferske data. Vennligst vent...</p>";
+				container.innerHTML = "<p id=\"loadingtxt\">Laster lynferske data. Gi oss 5-10 sekunder...</p>";
 				// Disable click-thrugh
 				L.DomEvent.disableClickPropagation(container);
 
@@ -159,8 +159,8 @@
 			onAdd: function (map) {
 				var container = L.DomUtil.create('div');
 				container.id = "textinfo";
-				container.innerHTML = `Laget av Alexander Hatlen ( post[krøllalfa]hortenlyd.no )<br>
-							Vil du heller vente på ledig time i nærheten? Sjekk ut <a href="https://passvarsel.no" target="_blan">passvarsel.no</a>`;
+				container.innerHTML = `Laget av Alexander Hatlen ( post[ætt]hortenlyd.no )<br>
+							Bli varslet isteden? Sjekk ut <a href="https://passvarsel.no" target="_blan">passvarsel.no</a>`;
 				// Disable click-thrugh
 				L.DomEvent.disableClickPropagation(container);
 
