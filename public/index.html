@@ -215,12 +215,12 @@
 			document.querySelector("#loadingtxt").style.visibility = "hidden";
 			document.querySelector("#passController-div").innerHTML = `
 				<p class="choose-days leaflet-control">Første ledige time innen <input id="daysfilter" type="text"> dager</p><br/>
-				<button style="leaflet-control" onclick="activateFilter(7)">1 uke</button>
-				<button style="leaflet-control" onclick="activateFilter(14)">2 uker</button>
-				<button style="leaflet-control" onclick="activateFilter(31)">1 måned</button>
-				<button style="leaflet-control" onclick="activateFilter(62)">2 måneder</button>
-				<button style="leaflet-control" onclick="activateFilter(93)">3 måneder</button>
-				<button style="leaflet-control" onclick="activateFilter(365)">1 år</button>
+				<button class="leaflet-control" onclick="activateFilter(7)">1 uke</button>
+				<button class="leaflet-control" onclick="activateFilter(14)">2 uker</button>
+				<button class="leaflet-control" onclick="activateFilter(31)">1 måned</button>
+				<button class="leaflet-control" onclick="activateFilter(62)">2 måneder</button>
+				<button class="leaflet-control" onclick="activateFilter(93)">3 måneder</button>
+				<button class="leaflet-control" onclick="activateFilter(365)">1 år</button>
 			`;
 			document.querySelector("#daysfilter").addEventListener('input', activateFilter);
 			document.querySelector("#daysfilter").focus();
