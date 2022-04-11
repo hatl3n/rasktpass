@@ -28,7 +28,7 @@
 	<style>
 		:root {
 			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-			font-size: 120%;
+			font-size: 100%;
 		}
 
 		html,
@@ -50,7 +50,7 @@
 		}
 
 		#passController-div > button {
-			padding: 0.5rem 0.8rem;
+			padding: 0.5rem 0.5rem;
 			margin: 2px;
 			background-color: #0369a1;
 			border: none;
@@ -73,11 +73,11 @@
 		.choose-days > input {
 			width: 3ch;
 			text-align: center;
-    		font-size: 1rem;
-    		display: inline;
+    			font-size: 1rem;
+    			display: inline;
 			border: none;
-    		border-bottom: 2px dashed #0369a1;
-    		color: #0369a1;
+    			border-bottom: 2px dashed #0369a1;
+    			color: #0369a1;
 			margin-left: 0.2rem;
 			margin-right: 0.2rem;
 		}
@@ -210,13 +210,13 @@
 			}
 			document.querySelector("#loadingtxt").style.visibility = "hidden";
 			document.querySelector("#passController-div").innerHTML = `
-				<p class="choose-days">Første ledige time innen <input id="daysfilter" type="text"> dager</p>
-				<button onclick="activateFilter(7)">1 uke</button>
-				<button onclick="activateFilter(14)">2 uker</button>
-				<button onclick="activateFilter(31)">1 måned</button>
-				<button onclick="activateFilter(62)">2 måneder</button>
-				<button onclick="activateFilter(93)">3 måneder</button>
-				<button onclick="activateFilter(365)">1 år</button>
+				<p class="choose-days leaflet-control">Første ledige time innen <input id="daysfilter" type="text"> dager</p>
+				<button style="leaflet-control" onclick="activateFilter(7)">1 uke</button>
+				<button style="leaflet-control" onclick="activateFilter(14)">2 uker</button>
+				<button style="leaflet-control" onclick="activateFilter(31)">1 måned</button>
+				<button style="leaflet-control" onclick="activateFilter(62)">2 måneder</button>
+				<button style="leaflet-control" onclick="activateFilter(93)">3 måneder</button>
+				<button style="leaflet-control" onclick="activateFilter(365)">1 år</button>
 			`;
 			document.querySelector("#daysfilter").addEventListener('input', activateFilter);
 			document.querySelector("#daysfilter").focus();
