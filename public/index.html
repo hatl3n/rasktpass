@@ -188,9 +188,10 @@
 		});
 
 		function createPassMarkers(passkontorer) {
-			for (passkontor of passkontorer) {
+			for (let passkontor of passkontorer) {
+				let localeDateString = new Date(passkontor.firstDate).toLocaleDateString();
 				let marker = L.marker([passkontor.coords.lat, passkontor.coords.long], { passProps: { ...passkontor }, icon: passIcon })
-					.bindPopup(`<a href="${passkontor.linkAppointment}" target="_blank" alt="${passkontor.name}">${passkontor.firstDate} @ ${passkontor.name}</a>`);
+					.bindPopup(`<a href="${passkontor.linkAppointment}" target="_blank" alt="${passkontor.name}">${localeDateString} @ ${passkontor.name}</a>`);
 				passmarkers.addLayer(marker);
 			}
 		}
