@@ -2,7 +2,7 @@ const morgan = require('morgan');
 const express = require('express');
 const rasktpass = require('./index.js');
 const app = express();
-const port = 80;
+const port = process.env.PORT || 80;
 
 var cachedJson = [0, ""]; // Format: unixtimems, jsonstring
 const _10MIN = 600000; // 10 min in ms
